@@ -1,0 +1,24 @@
+{
+  "name": "typescript-react",
+  "version": "1.0.0",
+  "description": "> TypeScript is a language for application-scale JavaScript development. TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. Any browser. Any host. Any OS. Open Source.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd src && typings install",
+    "start": "tsc -p . && browserify dist/app.js > dist/bundle.js && open index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "classnames": "^2.2.5",
+    "director": "^1.2.8",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "todomvc-app-css": "^2.0.6",
+    "todomvc-common": "^1.0.2",
+    "typescript": "^1.8.10",
+    "typings": "^1.3.2"
+  }
+}
