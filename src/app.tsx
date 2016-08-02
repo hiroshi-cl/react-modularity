@@ -7,7 +7,19 @@ import { TodoFooter } from "./footer";
 import { TodoItem } from "./todoItem";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS, ENTER_KEY } from "./constants";
 
-class TodoApp extends React.Component<IAppProps, IAppState> {
+class TodoApp {
+
+  constructor(public service: ITodoService) { }
+
+
+  public setState(state: IAppState): void {
+
+  }
+
+  // service への参照を持った TodoAppView を作りたい
+}
+
+class TodoAppView extends React.Component<IAppProps, IAppState> {
 
   public state: IAppState;
 
@@ -16,7 +28,7 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
     this.state = {
       nowShowing: ALL_TODOS,
       editing: null,
-      todos: this.props.model.todos
+      todos: []
     };
   }
 
@@ -162,14 +174,7 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
   }
 }
 
-const model = new TodoModel("react-todos");
-
-function render() {
-  ReactDOM.render(
-    <TodoApp model={model}/>,
-    document.getElementsByClassName("todoapp")[0]
-  );
-}
-
-model.subscribe(render);
-render();
+ReactDOM.render(
+  <TodoAppView />,
+  document.getElementsByClassName("todoapp")[0]
+);
