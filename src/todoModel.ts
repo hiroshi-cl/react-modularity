@@ -1,8 +1,3 @@
-/*jshint quotmark:false */
-/*jshint white:false */
-/*jshint trailing:false */
-/*jshint newcap:false */
-
 import { Utils } from "./utils";
 
 // Generic "model" object. You can use whatever
@@ -14,21 +9,21 @@ class TodoModel implements ITodoModel {
 
   public key : string;
   public todos : Array<ITodo>;
-  public onChanges : Array<any>;
+  public onChanges : Array<() => void>;
 
-  constructor(key: any) {
+  constructor(key: string) {
     this.key = key;
     this.todos = Utils.store(key);
     this.onChanges = [];
   }
 
-  public subscribe(onChange: any) {
+  public subscribe(onChange: () => void) {
     this.onChanges.push(onChange);
   }
 
   public inform() {
     Utils.store(this.key, this.todos);
-    this.onChanges.forEach(function (cb) { cb(); });
+    this.onChanges.forEach((cb) => { cb(); });
   }
 
   public addTodo(title : string) {
@@ -64,7 +59,7 @@ class TodoModel implements ITodoModel {
   }
 
   public destroy(todo : ITodo) {
-    this.todos = this.todos.filter(function (candidate) {
+    this.todos = this.todos.filter((candidate) => {
       return candidate !== todo;
     });
 
@@ -72,7 +67,7 @@ class TodoModel implements ITodoModel {
   }
 
   public save(todoToSave : ITodo, text : string) {
-    this.todos = this.todos.map(function (todo) {
+    this.todos = this.todos.map((todo) => {
       return todo !== todoToSave ? todo : Utils.extend({}, todo, {title: text});
     });
 
@@ -80,7 +75,7 @@ class TodoModel implements ITodoModel {
   }
 
   public clearCompleted() {
-    this.todos = this.todos.filter(function (todo) {
+    this.todos = this.todos.filter((todo) => {
       return !todo.completed;
     });
 

@@ -1,18 +1,13 @@
-/*jshint quotmark:false */
-/*jshint white:false */
-/*jshint trailing:false */
-/*jshint newcap:false */
-
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
 import { Utils } from "./utils";
 
 class TodoFooter extends React.Component<ITodoFooterProps, {}> {
 
   public render() {
-    var activeTodoWord = Utils.pluralize(this.props.count, 'item');
-    var clearButton: any = null;
+    const activeTodoWord = Utils.pluralize(this.props.count, "item");
+    let clearButton: JSX.Element = null;
 
     if (this.props.completedCount > 0) {
       clearButton = (
@@ -38,7 +33,7 @@ class TodoFooter extends React.Component<ITodoFooterProps, {}> {
               All
             </a>
           </li>
-          {' '}
+          {" "}
           <li>
             <a
               href="#/active"
@@ -46,7 +41,7 @@ class TodoFooter extends React.Component<ITodoFooterProps, {}> {
               Active
             </a>
           </li>
-          {' '}
+          {" "}
           <li>
             <a
               href="#/completed"

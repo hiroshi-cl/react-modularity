@@ -8,10 +8,10 @@ interface ITodoItemProps {
   key: string,
   todo: ITodo;
   editing?: boolean;
-  onSave: (val: any) => void;
+  onSave: (text: string) => void;
   onDestroy: () => void;
   onEdit: () => void;
-  onCancel: (event: any) => void;
+  onCancel: () => void;
   onToggle: () => void;
 }
 
@@ -21,24 +21,23 @@ interface ITodoItemState {
 
 interface ITodoFooterProps {
   completedCount: number;
-  onClearCompleted: any;
+  onClearCompleted: () => void;
   nowShowing: string;
   count: number;
 }
 
-// TODO: remove anys
 interface ITodoModel {
-  key: any;
+  key: string;
   todos: Array<ITodo>;
-  onChanges: Array<any>;
-  subscribe(onChange: any): any;
-  inform(): any;
-  addTodo(title: string): any;
-  toggleAll(checked: any): any;
-  toggle(todoToToggle: any): any;
-  destroy(todo: any): any;
-  save(todoToSave: any, text: any): any;
-  clearCompleted(): any;
+  onChanges: Array<(e: Event) => void>;
+  subscribe(onChange: (e: Event) => void): void;
+  inform(): void;
+  addTodo(title: string): void;
+  toggleAll(checked: boolean): void;
+  toggle(todoToToggle: ITodo): void;
+  destroy(todo: ITodo): void;
+  save(todoToSave: ITodo, text: string): void;
+  clearCompleted(): void;
 }
 
 interface IAppProps {

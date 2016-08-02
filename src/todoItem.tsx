@@ -1,10 +1,5 @@
-/*jshint quotmark: false */
-/*jshint white: false */
-/*jshint trailing: false */
-/*jshint newcap: false */
-
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { ENTER_KEY, ESCAPE_KEY } from "./constants";
 
 class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
@@ -16,8 +11,8 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
     this.state = { editText: this.props.todo.title };
   }
 
-  public handleSubmit(event: __React.FormEvent) {
-    var val = this.state.editText.trim();
+  public handleSubmit(event: React.FormEvent) {
+    const val = this.state.editText.trim();
     if (val) {
       this.props.onSave(val);
       this.setState({ editText: val });
@@ -31,17 +26,17 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
     this.setState({ editText: this.props.todo.title });
   }
 
-  public handleKeyDown(event: __React.KeyboardEvent) {
+  public handleKeyDown(event: React.KeyboardEvent) {
     if (event.keyCode === ESCAPE_KEY) {
       this.setState({ editText: this.props.todo.title });
-      this.props.onCancel(event);
+      this.props.onCancel();
     } else if (event.keyCode === ENTER_KEY) {
       this.handleSubmit(event);
     }
   }
 
-  public handleChange(event: __React.FormEvent) {
-    var input: any = event.target;
+  public handleChange(event: React.FormEvent) {
+    const input = event.target as HTMLInputElement;
     this.setState({ editText: input.value });
   }
 
@@ -68,7 +63,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
    */
   public componentDidUpdate(prevProps: ITodoItemProps) {
     if (!prevProps.editing && this.props.editing) {
-      var node = ReactDOM.findDOMNode<HTMLInputElement>(this.refs["editField"]);
+      const node = ReactDOM.findDOMNode<HTMLInputElement>(this.refs["editField"]);
       node.focus();
       node.setSelectionRange(node.value.length, node.value.length);
     }
