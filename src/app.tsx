@@ -15,7 +15,8 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
     super(props);
     this.state = {
       nowShowing: ALL_TODOS,
-      editing: null
+      editing: null,
+      todos: this.props.model.todos
     };
   }
 
