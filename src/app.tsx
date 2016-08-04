@@ -172,11 +172,13 @@ class TodoApp {
 
 const model = new TodoModel("react-todos");
 // View <- Captalize required!
-const View = (new TodoApp()).view;
+// const View = todo.view;
+const todo = new TodoApp();
 
 function render() {
   ReactDOM.render(
-    <View model={model}/>,
+    // <View model={model}/>,
+    <todo.view model={model}/>,
     document.getElementsByClassName("todoapp")[0]
   );
 }
