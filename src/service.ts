@@ -11,7 +11,9 @@ class TodoService implements ITodoService {
 
   setState(state: IServiceState): void {
     this.state = state;
-    const appState: IAppState = Object.assign({}, state);
+    const appState: IAppState = {};
+    appState.editing = state.editing;
+    appState.nowShowing = state.nowShowing;
     appState.todos = this.model.todos;
     this.view.setState(appState);
   }
