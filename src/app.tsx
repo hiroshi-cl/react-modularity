@@ -112,11 +112,11 @@ const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppStat
           <TodoItem
             key={todo.id}
             todo={todo}
-            onToggle={this.toggle.bind(this, todo) }
-            onDestroy={this.destroy.bind(this, todo) }
-            onEdit={this.edit.bind(this, todo) }
+            onToggle={ () => this.toggle(todo) }
+            onDestroy={ () => this.destroy(todo) }
+            onEdit={ () => this.edit(todo) }
             editing={this.state.editing === todo.id}
-            onSave={this.save.bind(this, todo) }
+            onSave={ (text) => this.save(todo, text) }
             onCancel={ () => this.cancel() }
             />
         );
@@ -179,8 +179,6 @@ const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppStat
 
 
 const model = new TodoModel("react-todos");
-// View <- Captalize required!
-// const View = todo.view;
 const todo = new TodoApp();
 const service = new TodoService(todo);
 todo.setService(service);
