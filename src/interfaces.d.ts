@@ -58,7 +58,7 @@ interface IServiceState {
 interface ITodoService {
   state: IAppState;
   model: ITodoModel;
-  view: { setState: (state: IAppState) => void };
+  app: { setState: (state: IAppState) => void };
 
   addTodo(title: string): void;
   toggleAll(checked: boolean): void;

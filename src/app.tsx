@@ -5,14 +5,22 @@ import * as ReactDOM from "react-dom";
 import { TodoModel } from "./todoModel";
 import { TodoFooter } from "./footer";
 import { TodoItem } from "./todoItem";
+import { TodoService } from "./service";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS, ENTER_KEY } from "./constants";
 
 class TodoApp {
-  constructor() {
-    this.view.prototype.text = "What needs to be done?";
+  public view: any;
+  public setState: (state: IAppState) => void;
+  public service: ITodoService;
+  public setService(service: ITodoService): void {
+    this.service = service;
   }
+  constructor() {
+    this.view = view(this);
+  }
+}
 
-  view = class extends React.Component<IAppProps, IAppState> {
+const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppState> {
 
     public state: IAppState;
     public text: string;
@@ -24,6 +32,7 @@ class TodoApp {
         editing: null,
         todos: this.props.model.todos
       };
+      app.setState = this.setState;
     }
 
     public componentDidMount() {
@@ -156,7 +165,7 @@ class TodoApp {
             <input
               ref="newField"
               className="new-todo"
-              placeholder={this.text}
+              placeholder="What needs to be done?"
               onKeyDown={ e => this.handleNewTodoKeyDown(e) }
               autoFocus={true}
               />
@@ -167,13 +176,14 @@ class TodoApp {
       );
     }
   }
-}
 
 
 const model = new TodoModel("react-todos");
 // View <- Captalize required!
 // const View = todo.view;
 const todo = new TodoApp();
+const service = new TodoService(todo);
+todo.setService(service);
 
 function render() {
   ReactDOM.render(

@@ -4,7 +4,7 @@ import { TodoFooter } from "./footer";
 import { TodoItem } from "./todoItem";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS, ENTER_KEY } from "./constants";
 
-class TodoService implements ITodoService {
+export class TodoService implements ITodoService {
 
   public state: IServiceState;
   public model: ITodoModel;
@@ -15,12 +15,13 @@ class TodoService implements ITodoService {
     appState.editing = state.editing;
     appState.nowShowing = state.nowShowing;
     appState.todos = this.model.todos;
-    this.view.setState(appState);
+    this.app.setState(appState);
   }
 
   // constructor injection
-  constructor(public view: { setState: (state: IAppState) => void }) {
+  constructor(public app: { setState: (state: IAppState) => void }) {
     this.model = new TodoModel("react-todos");
+    this.model.subscribe(() => this.setState(this.state));
     this.state = {
       nowShowing: ALL_TODOS,
       editing: null
