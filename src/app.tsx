@@ -2,7 +2,6 @@ declare const Router: any;
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { TodoModel } from "./todoModel";
 import { TodoFooter } from "./footer";
 import { TodoItem } from "./todoItem";
 import { TodoService } from "./service";
@@ -17,7 +16,7 @@ class TodoApp {
   }
 }
 
-const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppState> {
+const view = (app: TodoApp) => class extends React.Component<{}, IAppState> {
 
     public state: IAppState;
     public text: string;
@@ -27,9 +26,9 @@ const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppStat
       this.state = {
         nowShowing: ALL_TODOS,
         editing: null,
-        todos: this.props.model.todos
+        todos: []
       };
-      app.setState = this.setState;
+      app.setState = this.setState.bind(this);
     }
 
     public componentDidMount() {
@@ -52,7 +51,7 @@ const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppStat
       const val = ReactDOM.findDOMNode<HTMLInputElement>(this.refs["newField"]).value.trim();
 
       if (val) {
-        this.props.model.addTodo(val);
+        app.service.addTodo(val);
         ReactDOM.findDOMNode<HTMLInputElement>(this.refs["newField"]).value = "";
       }
     }
@@ -60,38 +59,37 @@ const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppStat
     public toggleAll(event: React.FormEvent) {
       const target = event.target as HTMLInputElement;
       const checked = target.checked;
-      this.props.model.toggleAll(checked);
+      app.service.toggleAll(checked);
     }
 
     public toggle(todoToToggle: ITodo) {
-      this.props.model.toggle(todoToToggle);
+      app.service.toggle(todoToToggle);
     }
 
     public destroy(todo: ITodo) {
-      this.props.model.destroy(todo);
+      app.service.destroy(todo);
     }
 
     public edit(todo: ITodo) {
-      this.setState({ editing: todo.id });
+      app.service.edit(todo);
     }
 
     public save(todoToSave: ITodo, text: string) {
-      this.props.model.save(todoToSave, text);
-      this.setState({ editing: null });
+      app.service.save(todoToSave, text);
     }
 
     public cancel() {
-      this.setState({ editing: null });
+      app.service.cancel();
     }
 
     public clearCompleted() {
-      this.props.model.clearCompleted();
+      app.service.clearCompleted();
     }
 
     public render() {
       let footer: JSX.Element;
       let main: JSX.Element;
-      const todos = this.props.model.todos;
+      const todos = this.state.todos;
 
       const shownTodos = todos.filter((todo) => {
         switch (this.state.nowShowing) {
@@ -174,19 +172,15 @@ const view = (app: TodoApp) => class extends React.Component<IAppProps, IAppStat
     }
   }
 
-
-const model = new TodoModel("react-todos");
 const todo = new TodoApp();
 const service = new TodoService(todo);
 todo.setService(service);
 
 function render() {
   ReactDOM.render(
-    // <View model={model}/>,
-    <todo.view model={model}/>,
+    <todo.view />,
     document.getElementsByClassName("todoapp")[0]
   );
 }
 
-model.subscribe(render);
 render();
