@@ -62,30 +62,6 @@ const view = (app: TodoApp) => class extends React.Component<{}, IAppState> {
       app.service.toggleAll(checked);
     }
 
-    public toggle(todoToToggle: ITodo) {
-      app.service.toggle(todoToToggle);
-    }
-
-    public destroy(todo: ITodo) {
-      app.service.destroy(todo);
-    }
-
-    public edit(todo: ITodo) {
-      app.service.edit(todo);
-    }
-
-    public save(todoToSave: ITodo, text: string) {
-      app.service.save(todoToSave, text);
-    }
-
-    public cancel() {
-      app.service.cancel();
-    }
-
-    public clearCompleted() {
-      app.service.clearCompleted();
-    }
-
     public render() {
       let footer: JSX.Element;
       let main: JSX.Element;
@@ -107,12 +83,12 @@ const view = (app: TodoApp) => class extends React.Component<{}, IAppState> {
           <TodoItem
             key={todo.id}
             todo={todo}
-            onToggle={ () => this.toggle(todo) }
-            onDestroy={ () => this.destroy(todo) }
-            onEdit={ () => this.edit(todo) }
+            onToggle={ () => app.service.toggle(todo) }
+            onDestroy={ () => app.service.destroy(todo) }
+            onEdit={ () => app.service.edit(todo) }
             editing={this.state.editing === todo.id}
-            onSave={ (text) => this.save(todo, text) }
-            onCancel={ () => this.cancel() }
+            onSave={ (text) => app.service.save(todo, text) }
+            onCancel={ () => app.service.cancel() }
             />
         );
       });
@@ -133,7 +109,7 @@ const view = (app: TodoApp) => class extends React.Component<{}, IAppState> {
             count={activeTodoCount}
             completedCount={completedCount}
             nowShowing={this.state.nowShowing}
-            onClearCompleted={ () => this.clearCompleted() }
+            onClearCompleted={ () => app.service.clearCompleted() }
             />;
       }
 

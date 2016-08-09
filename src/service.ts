@@ -10,7 +10,6 @@ export class TodoService implements ITodoService {
   public model: ITodoModel;
 
   setState(state: IServiceState): void {
-    console.log(state);
     this.state = state;
     const appState: IAppState = {};
     appState.editing = state.editing;
