@@ -9,14 +9,11 @@ import { TodoService } from "./service";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS, ENTER_KEY } from "./constants";
 
 class TodoApp {
-  public view: any;
+  public view = view(this);
   public setState: (state: IAppState) => void;
   public service: ITodoService;
   public setService(service: ITodoService): void {
     this.service = service;
-  }
-  constructor() {
-    this.view = view(this);
   }
 }
 
